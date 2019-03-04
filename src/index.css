@@ -25,3 +25,10 @@ code {
 button {
   font-family: 'PT Sans', sans-serif;
 }
+
+h1,
+h2,
+h3 {
+  color: #fff;
+  margin: 0;
+}

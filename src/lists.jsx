@@ -50,7 +50,7 @@ const Container = styled.div`
   align-items: center;
   padding: 1.5rem;
   width: 100%;
-  height: 100vh;
+  height: calc(${props => window.innerHeight * 0.01}px * 100);
 
   & > * + * {
     margin-top: 1.5em;
