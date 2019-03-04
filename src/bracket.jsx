@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import styled from 'styled-components/macro';
 
 import { StateContext, DispatchContext } from './App';
 
@@ -85,43 +86,67 @@ export function Bracket() {
   }
 
   return (
-    <div>
-      <div>
-        {!!first && !!second ? (
-          <React.Fragment>
-            <button onClick={() => pick(first, second)} type="button">
-              {first.title}
-            </button>
-            <button onClick={() => pick(second, first)} type="button">
-              {second.title}
-            </button>
-          </React.Fragment>
-        ) : null}
-      </div>
-      Remaining
-      <ul>
-        {remaining.map(t => (
-          <li key={t.title}>{t.title}</li>
-        ))}
-      </ul>
-      Winners
-      <ul>
-        {winners.map(t => (
-          <li key={t.title}>{t.title}</li>
-        ))}
-      </ul>
-      Losers
-      <ul>
-        {losers.map(t => (
-          <li key={t.title}>{t.title}</li>
-        ))}
-      </ul>
-      Sorted
-      <ul>
-        {sorted.map(t => (
-          <li key={t.title}>{t.title}</li>
-        ))}
-      </ul>
-    </div>
+    <Container>
+      <Heading>Pick a Winner</Heading>
+      {!!first && !!second ? (
+        <ChoiceWrapper>
+          <First onClick={() => pick(first, second)}>{first.title}</First>
+          <VS>vs</VS>
+          <Second onClick={() => pick(second, first)}>{second.title}</Second>
+        </ChoiceWrapper>
+      ) : null}
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  width: 100%;
+  height: 100vh;
+
+  & > * + * {
+    margin-top: 1.5rem;
+  }
+`;
+
+const Heading = styled.h1`
+  color: #fff;
+`;
+
+const ChoiceWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
+
+const Button = styled.button.attrs({
+  type: 'button',
+})`
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  width: 75%;
+  padding: 0.75em;
+  border-radius: 20px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  flex: 1;
+`;
+
+const First = styled(Button)`
+  background-color: #ecbe13;
+`;
+
+const Second = styled(Button)`
+  background-color: hsl(68, 59%, 40%);
+`;
+
+const VS = styled.h2`
+  color: #fff;
+`;
