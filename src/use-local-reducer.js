@@ -6,11 +6,11 @@ export function useLocalReducer(storageKey, reducer, initialState) {
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem(storageKey)) || initialState;
     dispatch({ type: 'hydrate', state: stored });
-  }, [storageKey]);
+  }, [storageKey, initialState]);
 
   useEffect(() => {
     localStorage.setItem(storageKey, JSON.stringify(state));
-  }, [state]);
+  }, [state, storageKey]);
 
   return [state, dispatch];
 }

@@ -7,6 +7,17 @@ function getRandomIndex(arr) {
   return Math.floor(Math.random() * arr.length);
 }
 
+function pickNext(arr) {
+  let a = [...arr];
+  let index = getRandomIndex(a);
+  let one = a[index];
+  a = [...a.slice(0, index), ...a.slice(index + 1)];
+  index = getRandomIndex(a);
+  let two = a[index];
+  a = [...a.slice(0, index), ...a.slice(index + 1)];
+  return [one, two, a];
+}
+
 export function Bracket() {
   const [remaining, setRemaining] = useState([]);
   const [winners, setWinners] = useState([]);
@@ -22,7 +33,7 @@ export function Bracket() {
     let remaining = [...state.tasks];
     if (state.tasks.length % 2 === 1) {
       let index = getRandomIndex(remaining);
-      setWinners([...winners, remaining[index]]);
+      setWinners([remaining[index]]);
       remaining = [...remaining.slice(0, index), ...remaining.slice(index + 1)];
     }
 
@@ -30,18 +41,7 @@ export function Bracket() {
     setFirst(one);
     setSecond(two);
     setRemaining(rem);
-  }, []);
-
-  function pickNext(arr) {
-    let a = [...arr];
-    let index = getRandomIndex(a);
-    let one = a[index];
-    a = [...a.slice(0, index), ...a.slice(index + 1)];
-    index = getRandomIndex(a);
-    let two = a[index];
-    a = [...a.slice(0, index), ...a.slice(index + 1)];
-    return [one, two, a];
-  }
+  }, [state.tasks]);
 
   function pick(w, l) {
     if (remaining.length > 0) {
