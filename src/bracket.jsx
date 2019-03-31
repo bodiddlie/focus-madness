@@ -90,9 +90,13 @@ export function Bracket() {
       <Heading>Pick a Winner</Heading>
       {!!first && !!second ? (
         <ChoiceWrapper>
-          <First onClick={() => pick(first, second)}>{first.title}</First>
+          <First onClick={() => pick(first, second)} data-testid="first">
+            {first.title}
+          </First>
           <VS>vs</VS>
-          <Second onClick={() => pick(second, first)}>{second.title}</Second>
+          <Second onClick={() => pick(second, first)} data-testid="second">
+            {second.title}
+          </Second>
         </ChoiceWrapper>
       ) : null}
     </Container>

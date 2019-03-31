@@ -7,15 +7,11 @@ export const initialState = {
   lastAsk: Date.now(),
 };
 
-export function reducer(state, action) {
+export function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case 'hydrate': {
       const lastAsk = parse(action.state.lastAsk);
-      const { appState, tasks } = action.state;
-      const sorted = action.state.sorted.map(s => ({
-        ...s,
-        startDate: !!s.startDate ? parse(s.startDate) : null,
-      }));
+      const { appState, tasks, sorted } = action.state;
       const newState = { lastAsk, appState, tasks, sorted };
       return newState;
     }
@@ -40,15 +36,6 @@ export function reducer(state, action) {
         appState: filtered.length === 0 ? 'list' : state.appState,
       };
       return newState;
-    }
-    case 'start': {
-      const started = state.sorted.map(s => {
-        if (s.title === action.task.title) {
-          s.startDate = Date.now();
-        }
-        return s;
-      });
-      return { ...state, sorted: started };
     }
     case 'add_bottom': {
       if (state.sorted.find(t => t.title === action.task.title)) {

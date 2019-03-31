@@ -8,7 +8,7 @@ import { Todo } from './todo';
 import { useLocalReducer } from './use-local-reducer';
 import { initialState, reducer } from './reducer';
 
-const STATE_KEY = 'focus-madness-2019-state-key';
+export const STATE_KEY = 'focus-madness-2019-state-key';
 
 export const StateContext = createContext(initialState);
 export const DispatchContext = createContext(null);

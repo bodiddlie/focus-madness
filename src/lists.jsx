@@ -22,8 +22,14 @@ export function Lists(props) {
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
-        <TextBox name="title" onChange={handleChange} value={title} />
-        <AddButton>
+        <label htmlFor="title">Task Title</label>
+        <TextBox
+          id="title"
+          name="title"
+          onChange={handleChange}
+          value={title}
+        />
+        <AddButton data-testid="add-button" disabled={title.length === 0}>
           <Plus>
             <path d="M25 5 L25 45 M5 25 L45 25" />
           </Plus>

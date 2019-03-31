@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components/macro';
 
 import { StateContext, DispatchContext } from './App';
 
 export function Todo() {
   const [title, setTitle] = useState('');
-  const [time, setTime] = useState(0);
   const [added, setAdded] = useState(null);
   const state = useContext(StateContext);
   const dispatch = useContext(DispatchContext);
@@ -13,10 +12,6 @@ export function Todo() {
 
   function complete() {
     dispatch({ type: 'complete', task: first });
-  }
-
-  function start() {
-    dispatch({ type: 'start', task: first });
   }
 
   function handleChange({ target }) {
@@ -31,39 +26,24 @@ export function Todo() {
     setTitle('');
   }
 
-  useEffect(() => {
-    const timer = setInterval(() =>
-      setTime(!!first.startDate ? Date.now() - first.startDate : 0)
-    );
-    return () => clearInterval(timer);
-  });
-  let hours = Math.floor((time / (1000 * 60 * 60)) % 60);
-  let minutes = Math.floor((time / (1000 * 60)) % 60);
-  let seconds = Math.floor((time / 1000) % 60);
-  hours = hours < 10 ? '0' + hours : hours;
-  minutes = minutes < 10 ? '0' + minutes : minutes;
-  seconds = seconds < 10 ? '0' + seconds : seconds;
-
   return (
     <Container>
       <h1>Task:</h1>
       <h2>{first.title}</h2>
       <Buttons>
         <First onClick={complete}>Complete</First>
-        <Second onClick={start}>
-          {!!first.startDate ? 'Restart' : 'Start'}
-        </Second>
       </Buttons>
-      {!!first.startDate ? (
-        <Timer>
-          {hours}h:{minutes}m:{seconds}s
-        </Timer>
-      ) : null}
       <Bottom>
         {!!added ? <Toast>Added "{added}" to bottom of list.</Toast> : null}
         <Form onSubmit={handleSubmit}>
-          <TextBox name="title" onChange={handleChange} value={title} />
-          <AddButton>
+          <label htmlFor="title">Task Title</label>
+          <TextBox
+            id="title"
+            name="title"
+            onChange={handleChange}
+            value={title}
+          />
+          <AddButton data-testid="add-button">
             <Plus>
               <path d="M25 5 L25 45 M5 25 L45 25" />
             </Plus>
@@ -109,17 +89,6 @@ const Button = styled.button.attrs({
 
 const First = styled(Button)`
   background-color: #ecbe13;
-`;
-
-const Second = styled(Button)`
-  background-color: hsl(68, 59%, 40%);
-`;
-
-const Timer = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  color: #fff;
 `;
 
 const Bottom = styled.div`
